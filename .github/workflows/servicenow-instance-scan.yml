@@ -1,0 +1,43 @@
+name: ServiceNow CI/CD Instance Scan
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  scan-app:
+    name: Scan App
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo debug: listar os arquivos do workflow
+      - name: List workflows
+        run: ls -R .github/workflows
+
+      # Passo debug: mostrar conteúdo do YAML atual
+      - name: Show current workflow content
+        run: cat .github/workflows/servicenow-instance-scan.yml
+
+      # Passo debug: print envs e secrets disponíveis
+      - name: Debug environment
+        run: |
+          echo "NOW_SCAN_INSTANCE: ${{ secrets.NOW_SCAN_INSTANCE }}"
+          echo "NOW_USERNAME: ${{ secrets.NOW_USERNAME }}"
+          echo "NOW_PASSWORD length: ${#${{ secrets.NOW_PASSWORD }}}"
+          echo "Actor: $GITHUB_ACTOR"
+          echo "Ref: $GITHUB_REF"
+
+      # Agora sim, rodar o scan
+      - name: ServiceNow CI/CD Instance Scan
+        uses: ServiceNow/sncicd-instance-scan@3acee37296d42bfafcb50cb04253409a83b42c44
+        id: scan
+        with:
+          scantype: 'suite_update'
+          suiteSysId: 532840af20a70110fa9b96e15935cc77
+          updateSetSysIds: 24b462f19380321046e4ff8ddd03d622
+          instanceUrl: ${{ secrets.NOW_SCAN_INSTANCE }}
+          instanceUsername: ${{ secrets.NOW_USERNAME }}
+          instancePassword: ${{ secrets.NOW_PASSWORD }}
