@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+          # Checkout do repositório (obrigatório)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       # Passo debug: listar os arquivos do workflow
       - name: List workflows
         run: ls -R .github/workflows
