@@ -23,7 +23,7 @@ jobs:
 
       # Passo debug: mostrar conteúdo do YAML atual
       - name: Show current workflow content
-        run: cat .github/workflows/servicenow-instance-scan.yml
+        run: cat .github/workflows/snow-scan-instance.yml
 
       # Passo debug: verificar secrets e contexto
       - name: Debug environment
