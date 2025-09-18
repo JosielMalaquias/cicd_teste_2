@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-          # Checkout do repositório (obrigatório)
+      # Checkout do repositório (obrigatório)
       - name: Checkout repository
         uses: actions/checkout@v4
         
@@ -25,12 +25,12 @@ jobs:
       - name: Show current workflow content
         run: cat .github/workflows/servicenow-instance-scan.yml
 
-      # Passo debug: print envs e secrets disponíveis
+      # Passo debug: verificar secrets e contexto
       - name: Debug environment
         run: |
-          echo "NOW_SCAN_INSTANCE: ${{ secrets.NOW_SCAN_INSTANCE }}"
-          echo "NOW_USERNAME: ${{ secrets.NOW_USERNAME }}"
-          echo "NOW_PASSWORD length: ${#${{ secrets.NOW_PASSWORD }}}"
+          echo "NOW_SCAN_INSTANCE set? ${{ secrets.NOW_SCAN_INSTANCE != '' }}"
+          echo "NOW_USERNAME set? ${{ secrets.NOW_USERNAME != '' }}"
+          echo "NOW_PASSWORD set? ${{ secrets.NOW_PASSWORD != '' }}"
           echo "Actor: $GITHUB_ACTOR"
           echo "Ref: $GITHUB_REF"
 
