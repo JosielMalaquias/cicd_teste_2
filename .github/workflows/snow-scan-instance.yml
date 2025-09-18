@@ -34,15 +34,20 @@ jobs:
           echo "Actor: $GITHUB_ACTOR"
           echo "Ref: $GITHUB_REF"
 
-      # Agora sim, rodar o scan
-      - name: ServiceNow CI/CD Instance Scan
-        uses: ServiceNow/sncicd-instance-scan@3acee37296d42bfafcb50cb04253409a83b42c44
-        id: scan
-        with:
-          scantype: 'suite_update'
-          suiteSysId: 532840af20a70110fa9b96e15935cc77
-          updateSetSysIds: 24b462f19380321046e4ff8ddd03d622
-        env:
-          nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
-          nowUsername: ${{ secrets.NOW_USERNAME }}
-          nowPassword: ${{ secrets.NOW_PASSWORD }}
+      - name: Debug URL (safe)
+        run: |
+          url="${{ secrets.NOW_SCAN_INSTANCE }}"
+          echo "NowScanInstance domain: $(echo $url | awk -F/ '{print $3}')"
+          
+            # Agora sim, rodar o scan
+            - name: ServiceNow CI/CD Instance Scan
+              uses: ServiceNow/sncicd-instance-scan@3acee37296d42bfafcb50cb04253409a83b42c44
+              id: scan
+              with:
+                scantype: 'suite_update'
+                suiteSysId: 532840af20a70110fa9b96e15935cc77
+                updateSetSysIds: 24b462f19380321046e4ff8ddd03d622
+              env:
+                nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
+                nowUsername: ${{ secrets.NOW_USERNAME }}
+                nowPassword: ${{ secrets.NOW_PASSWORD }}
