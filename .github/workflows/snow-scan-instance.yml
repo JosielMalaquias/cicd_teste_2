@@ -42,6 +42,7 @@ jobs:
           scantype: 'suite_update'
           suiteSysId: 532840af20a70110fa9b96e15935cc77
           updateSetSysIds: 24b462f19380321046e4ff8ddd03d622
-          instanceUrl: ${{ secrets.NOW_SCAN_INSTANCE }}
-          instanceUsername: ${{ secrets.NOW_USERNAME }}
-          instancePassword: ${{ secrets.NOW_PASSWORD }}
+        env:
+          nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
+          nowUsername: ${{ secrets.NOW_USERNAME }}
+          nowPassword: ${{ secrets.NOW_PASSWORD }}
