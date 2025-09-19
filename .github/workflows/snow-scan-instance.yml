@@ -18,7 +18,7 @@ jobs:
       
       - name: ServiceNow CI/CD Instance Scan
         # Usando a sua versão específica
-        uses: ServiceNow/sncicd-instance-scan@3acee37296d42bfafcb50cb04253409a83b42c44
+        uses: ServiceNow/sncicd-instance-scan@2.0.0
         id: scan
         
         # Bloco 'with:' para os PARÂMETROS DE SCAN (como o 2º erro exigiu)
