@@ -13,41 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do repositório (obrigatório)
+      # 1. Checkout do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      # Passo debug: listar os arquivos do workflow
-      - name: List workflows
-        run: ls -R .github/workflows
-
-      # Passo debug: mostrar conteúdo do YAML atual
-      - name: Show current workflow content
-        run: cat .github/workflows/snow-scan-instance.yml
-
-      # Passo debug: verificar secrets e contexto
-      - name: Debug environment
-        run: |
-          echo "NOW_SCAN_INSTANCE set? ${{ secrets.NOW_SCAN_INSTANCE != '' }}"
-          echo "NOW_USERNAME set? ${{ secrets.NOW_USERNAME != '' }}"
-          echo "NOW_PASSWORD set? ${{ secrets.NOW_PASSWORD != '' }}"
-          echo "Actor: $GITHUB_ACTOR"
-          echo "Ref: $GITHUB_REF"
-
-      - name: Debug URL (safe)
-        run: |
-          url="${{ secrets.NOW_SCAN_INSTANCE }}"
-          echo "NowScanInstance domain: $(echo $url | awk -F/ '{print $3}')"
       
-      # Agora sim, rodar o scan
+      # 2. Executar o scan com a configuração CORRETA
       - name: ServiceNow CI/CD Instance Scan
+        # Usando a versão exata que você especificou
         uses: ServiceNow/sncicd-instance-scan@3acee37296d42bfafcb50cb04253409a83b42c44
         id: scan
         with:
+          # --- Parâmetros do Scan (já estavam corretos) ---
           scantype: 'suite_update'
           suiteSysId: 532840af20a70110fa9b96e15935cc77
           updateSetSysIds: 24b462f19380321046e4ff8ddd03d622
-        env:
-          nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
-          nowUsername: ${{ secrets.NOW_USERNAME }}
-          nowPassword: ${{ secrets.NOW_PASSWORD }}
+
+          # --- CREDENCIAIS CORRIGIDAS (movidas de 'env:' para 'with:') ---
+          # A action espera estes nomes de parâmetros específicos.
+          instanceUrl: ${{ secrets.NOW_SCAN_INSTANCE }}
+          instanceUsername: ${{ secrets.NOW_USERNAME }}
+          instancePassword: ${{ secrets.NOW_PASSWORD }}
