@@ -1,4 +1,4 @@
-name: ServiceNow CI/CD Instance Scan
+name: ServiceNow_Scan_Instance
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       
       - name: ServiceNow CI/CD Instance Scan
         # Usando a sua versão específica
-        uses: ServiceNow/sncicd-instance-scan@v1.0.0
+        uses: ServiceNow/sncicd-instance-scan@2.0.0
         id: scan
         
         # Bloco 'with:' para os PARÂMETROS DE SCAN (como o 2º erro exigiu)
@@ -29,6 +29,6 @@ jobs:
         
         # Bloco 'env:' para as CREDENCIAIS (como o 1º erro exigiu)
         env:
-          nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
           nowUsername: ${{ secrets.NOW_USERNAME }}
           nowPassword: ${{ secrets.NOW_PASSWORD }}
+          nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
