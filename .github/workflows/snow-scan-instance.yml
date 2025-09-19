@@ -13,23 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      # 2. Executar o scan com a configuração CORRETA
       - name: ServiceNow CI/CD Instance Scan
-        # Usando a versão exata que você especificou
+        # Usando a sua versão específica
         uses: ServiceNow/sncicd-instance-scan@3acee37296d42bfafcb50cb04253409a83b42c44
         id: scan
+        
+        # Bloco 'with:' para os PARÂMETROS DE SCAN (como o 2º erro exigiu)
         with:
-          # --- Parâmetros do Scan (já estavam corretos) ---
           scantype: 'suite_update'
           suiteSysId: 532840af20a70110fa9b96e15935cc77
           updateSetSysIds: 24b462f19380321046e4ff8ddd03d622
-
-          # --- CREDENCIAIS CORRIGIDAS (movidas de 'env:' para 'with:') ---
-          # A action espera estes nomes de parâmetros específicos.
-          instanceUrl: ${{ secrets.NOW_SCAN_INSTANCE }}
-          instanceUsername: ${{ secrets.NOW_USERNAME }}
-          instancePassword: ${{ secrets.NOW_PASSWORD }}
+        
+        # Bloco 'env:' para as CREDENCIAIS (como o 1º erro exigiu)
+        env:
+          nowScanInstance: ${{ secrets.NOW_SCAN_INSTANCE }}
+          nowUsername: ${{ secrets.NOW_USERNAME }}
+          nowPassword: ${{ secrets.NOW_PASSWORD }}
